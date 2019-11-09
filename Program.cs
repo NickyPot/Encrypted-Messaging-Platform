@@ -61,7 +61,7 @@ namespace ServerTest
                     byte[] msg = new byte[1024];
                     ns.Read(msg, 0, msg.Length);
                     string hello = Encoding.Default.GetString(msg).Trim();
-                    Console.WriteLine(hello);
+                    Console.WriteLine(hello + " from client with eno " + eno);
                     byte[] message = new byte[1024];
                     ns.Write(message, 0, message.Length);
 
@@ -69,7 +69,7 @@ namespace ServerTest
                 catch
                 {
 
-                    Console.WriteLine("disconnected");
+                    Console.WriteLine("client with eno " + eno +" disconnected");
                 
                 }
             }
