@@ -58,18 +58,42 @@ namespace ServerTest
             {
                 try
                 {
-                    byte[] msg = new byte[1024];
-                    ns.Read(msg, 0, msg.Length);
-                    string hello = Encoding.Default.GetString(msg).Trim();
-                    Console.WriteLine(hello + " from client with eno " + eno);
-                    byte[] message = new byte[1024];
-                    ns.Write(message, 0, message.Length);
+                    byte[] enoToConnectByte = new byte[1024];//the byte that contains the eno number the user wants to talk to, is stored here
+                    ns.Read(enoToConnectByte, 0, enoToConnectByte.Length);//read the netstream for the eno
+                    int enoToConnect = Int32.Parse(Encoding.Default.GetString(enoToConnectByte).Trim());//convert the byte to int to be used in the dictionairy
+                    byte[] disconnectTest = new byte[1024];//this byte is used to check if the connection is still live 
+
+                    //here the server will try to get the message from the client and write it into the netstream of the client the user wants to talk to
+                    while (true)
+                    {
+                        try
+                        {
+                            byte[] msg = new byte[1024];//this byte will take the message that the client wants to exchange
+                            ns.Read(msg, 0, msg.Length);//read the byte
+                            string serverLog = Encoding.Default.GetString(msg).Trim();//convert to string (for debugging purposes)
+                            Console.WriteLine(serverLog + " from client with eno " + eno);//write the message to the server console
+                            userDictionary[enoToConnect].Write(msg, 0, msg.Length);//write the messsage to the desired client stream
+                           
+                            ns.Write(disconnectTest, 0, disconnectTest.Length);//check if the connection is still alive
+                        }
+                        catch
+                        {
+                            Console.WriteLine("user is no longer online");
+                            break;
+
+
+                        }
+                    }
+
+                    
+                    ns.Write(disconnectTest, 0, disconnectTest.Length);//check if the connection is still alive
 
                 }
                 catch
                 {
 
                     Console.WriteLine("client with eno " + eno +" disconnected");
+                    break;
                 
                 }
             }
