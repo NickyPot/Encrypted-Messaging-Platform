@@ -25,6 +25,10 @@ namespace clientMessaging
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
             enoOfClient = eno;
+            ASCIIEncoding encoded = new ASCIIEncoding();
+            byte[] byteArray = encoded.GetBytes(enoOfClient);
+            netstream = startConn();
+            netstream.Write(byteArray, 0, byteArray.Length);
 
 
         }
@@ -54,9 +58,6 @@ namespace clientMessaging
         private void connectToUserBtn_Click(object sender, EventArgs e)
         {
             ASCIIEncoding encoded = new ASCIIEncoding();
-            byte[] byteArray = encoded.GetBytes(enoOfClient);
-            netstream = startConn();
-            netstream.Write(byteArray, 0, byteArray.Length);
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
             netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
