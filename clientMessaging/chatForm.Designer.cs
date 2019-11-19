@@ -34,16 +34,18 @@
             this.sendBtn = new System.Windows.Forms.Button();
             this.chatList = new System.Windows.Forms.ListBox();
             this.chatTextBox = new System.Windows.Forms.TextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // connectToUserBtn
             // 
-            this.connectToUserBtn.Location = new System.Drawing.Point(372, 280);
+            this.connectToUserBtn.Location = new System.Drawing.Point(372, 259);
             this.connectToUserBtn.Name = "connectToUserBtn";
             this.connectToUserBtn.Size = new System.Drawing.Size(75, 40);
             this.connectToUserBtn.TabIndex = 11;
             this.connectToUserBtn.Text = "Connect To User";
             this.connectToUserBtn.UseVisualStyleBackColor = true;
+            this.connectToUserBtn.Click += new System.EventHandler(this.connectToUserBtn_Click);
             // 
             // label1
             // 
@@ -53,6 +55,7 @@
             this.label1.Size = new System.Drawing.Size(119, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "ID of user to connect to";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // enoTextBox
             // 
@@ -60,6 +63,7 @@
             this.enoTextBox.Name = "enoTextBox";
             this.enoTextBox.Size = new System.Drawing.Size(100, 20);
             this.enoTextBox.TabIndex = 9;
+            this.enoTextBox.TextChanged += new System.EventHandler(this.enoTextBox_TextChanged);
             // 
             // sendBtn
             // 
@@ -69,6 +73,7 @@
             this.sendBtn.TabIndex = 8;
             this.sendBtn.Text = "Send";
             this.sendBtn.UseVisualStyleBackColor = true;
+            this.sendBtn.Click += new System.EventHandler(this.sendBtn_Click);
             // 
             // chatList
             // 
@@ -77,6 +82,7 @@
             this.chatList.Name = "chatList";
             this.chatList.Size = new System.Drawing.Size(323, 212);
             this.chatList.TabIndex = 7;
+            this.chatList.SelectedIndexChanged += new System.EventHandler(this.chatList_SelectedIndexChanged);
             // 
             // chatTextBox
             // 
@@ -84,6 +90,13 @@
             this.chatTextBox.Name = "chatTextBox";
             this.chatTextBox.Size = new System.Drawing.Size(251, 20);
             this.chatTextBox.TabIndex = 6;
+            this.chatTextBox.TextChanged += new System.EventHandler(this.chatTextBox_TextChanged);
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // chatForm
             // 
@@ -111,5 +124,6 @@
         private System.Windows.Forms.Button sendBtn;
         private System.Windows.Forms.ListBox chatList;
         private System.Windows.Forms.TextBox chatTextBox;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

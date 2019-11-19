@@ -47,8 +47,9 @@ namespace ServerTest
             * and create an entry in the user dictionairy that is used to map all the connected clients
            */
 
-            byte[] enoByte = new byte[1024];//byte where the eno in byte form will be stored
+            byte[] enoByte = new byte[1024];//byte where the eno of the user using the client,  will be stored. (in byte form)
             ns.Read(enoByte, 0, enoByte.Length);//store the eno
+            
             eno = Int32.Parse(Encoding.Default.GetString(enoByte).Trim());//put the employee number in the temp val
             userDictionary.Add(eno, ns);// add the client details (eno and netstream) to the dictionairy
 

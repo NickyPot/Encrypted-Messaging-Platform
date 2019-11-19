@@ -64,8 +64,8 @@ namespace clientMessaging
                 if (users.Read())
                 {
 
-
-                    chatForm chatForm = new chatForm();
+                    
+                    chatForm chatForm = new chatForm(enoTextBox.Text);
                     chatForm.Show();
                     this.Hide();
 
