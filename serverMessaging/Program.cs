@@ -78,9 +78,11 @@ namespace ServerTest
                                 ASCIIEncoding encoded = new ASCIIEncoding();
                                 byte[] msg = new byte[1024];//this byte will take the message that the client wants to exchange
                                 ns.Read(msg, 0, msg.Length);//read the byte
+                                
                                 string serverLog = Encoding.Default.GetString(msg).Trim();//convert to string (for debugging purposes)
-                                string stringMsg = serverLog.Insert(0, "from client with eno " + eno);//this includes who sent the message
                                 Console.WriteLine(serverLog + " from client with eno " + eno);//write the message to the server console
+                                
+                                string stringMsg = serverLog.Insert(0, "from client with eno " + eno);//this includes who sent the message
                                 msg = encoded.GetBytes(stringMsg);
                                 userDictionary[enoToConnect].Write(msg, 0, msg.Length);//write the messsage to the desired client stream
 
