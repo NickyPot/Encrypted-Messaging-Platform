@@ -35,6 +35,7 @@
             this.chatList = new System.Windows.Forms.ListBox();
             this.chatTextBox = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.importantCheck = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // connectToUserBtn
@@ -98,11 +99,23 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // importantCheck
+            // 
+            this.importantCheck.AutoSize = true;
+            this.importantCheck.Location = new System.Drawing.Point(17, 357);
+            this.importantCheck.Name = "importantCheck";
+            this.importantCheck.Size = new System.Drawing.Size(70, 17);
+            this.importantCheck.TabIndex = 13;
+            this.importantCheck.Text = "Important";
+            this.importantCheck.UseVisualStyleBackColor = true;
+            this.importantCheck.CheckedChanged += new System.EventHandler(this.importantCheck_CheckedChanged);
+            // 
             // chatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(530, 405);
+            this.Controls.Add(this.importantCheck);
             this.Controls.Add(this.connectToUserBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.enoTextBox);
@@ -125,5 +138,6 @@
         private System.Windows.Forms.ListBox chatList;
         private System.Windows.Forms.TextBox chatTextBox;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox importantCheck;
     }
 }

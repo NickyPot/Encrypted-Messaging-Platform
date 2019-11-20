@@ -18,6 +18,9 @@ namespace clientMessaging
         NetworkStream netstream;
         string serverMessage = "";
         string enoOfClient;
+        string importantIsSet;//used when the user wants to send an important message, used string because it is easier to convert to bytes and conevert back
+        bool incomingImportant;//used the user has an incoming important message 
+        ASCIIEncoding encoded = new ASCIIEncoding();
 
         public chatForm(string eno)
         {
@@ -64,7 +67,7 @@ namespace clientMessaging
 
         private void connectToUserBtn_Click(object sender, EventArgs e)
         {
-            ASCIIEncoding encoded = new ASCIIEncoding();
+            
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
             netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
@@ -125,6 +128,8 @@ namespace clientMessaging
 
                 serverMessage = Encoding.Default.GetString(messageByte).Trim();
                 serverMessage = serverMessage.Replace("\0", string.Empty);
+
+               
                
 
                 worker.ReportProgress(1);
@@ -140,7 +145,32 @@ namespace clientMessaging
         {
             if (serverMessage != "") 
             {
+
+                if (incomingImportant)
+                {
+                    //add IMPORTANT to string message
+                    serverMessage = serverMessage + " [IMPORTANT]";
+
+                    //play sound
+
+
+                    //reset incomingImportant bool
+                    incomingImportant = false;
+
+                }
+
+                //if the client the current user is talking to, has ticked the important checkBox
+                if (serverMessage.Contains("abcdf21"))
+                {
+                    incomingImportant = true;
+
+                }
+
+
+
                 chatList.Items.Add(serverMessage);
+                                            
+               
             }
             
         }
@@ -148,6 +178,22 @@ namespace clientMessaging
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
+        }
+
+        private void importantCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (importantCheck.Checked)
+            {
+                importantIsSet = "abcdf21";
+                //send to the other client that an important message is coming
+                byte[] important = encoded.GetBytes(importantIsSet);
+                netstream.Write(important, 0, important.Length);
+            }
+
+            else 
+            {
+                importantIsSet = "";
+            }
         }
     }
 }
