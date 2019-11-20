@@ -35,8 +35,15 @@ namespace clientMessaging
 
         private void startBackground()
         {
-            // Start the asynchronous operation.
-            backgroundWorker1.RunWorkerAsync();
+
+            if (backgroundWorker1.IsBusy != true)
+            {
+
+                // Start the asynchronous operation.
+                backgroundWorker1.RunWorkerAsync();
+
+            }
+           
 
         }
 
@@ -61,8 +68,14 @@ namespace clientMessaging
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
             netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
+            
 
+            
             startBackground();
+            
+            
+
+            
 
 
         }
@@ -111,8 +124,11 @@ namespace clientMessaging
 
 
                 serverMessage = Encoding.Default.GetString(messageByte).Trim();
+                serverMessage = serverMessage.Replace("\0", string.Empty);
+               
 
                 worker.ReportProgress(1);
+                
 
 
 
@@ -122,7 +138,11 @@ namespace clientMessaging
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            chatList.Items.Add(serverMessage);
+            if (serverMessage != "") 
+            {
+                chatList.Items.Add(serverMessage);
+            }
+            
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

@@ -64,28 +64,53 @@ namespace ServerTest
                     int enoToConnect = Int32.Parse(Encoding.Default.GetString(enoToConnectByte).Trim());//convert the byte to int to be used in the dictionairy
                     byte[] disconnectTest = new byte[1024];//this byte is used to check if the connection is still live 
 
-                    //here the server will try to get the message from the client and write it into the netstream of the client the user wants to talk to
-                    while (true)
+
+
+
+                    if (userDictionary.ContainsKey(enoToConnect))
                     {
-                        try
+                        //here the server will try to get the message from the client and write it into the netstream of the client the user wants to talk to
+                        while (true)
                         {
-                            byte[] msg = new byte[1024];//this byte will take the message that the client wants to exchange
-                            ns.Read(msg, 0, msg.Length);//read the byte
-                            string serverLog = Encoding.Default.GetString(msg).Trim();//convert to string (for debugging purposes)
-                            Console.WriteLine(serverLog + " from client with eno " + eno);//write the message to the server console
-                            userDictionary[enoToConnect].Write(msg, 0, msg.Length);//write the messsage to the desired client stream
-                           
-                            ns.Write(disconnectTest, 0, disconnectTest.Length);//check if the connection is still alive
-                        }
-                        catch
-                        {
-                            Console.WriteLine("user is no longer online");
-                            break;
+
+                            try
+                            {
+                                ASCIIEncoding encoded = new ASCIIEncoding();
+                                byte[] msg = new byte[1024];//this byte will take the message that the client wants to exchange
+                                ns.Read(msg, 0, msg.Length);//read the byte
+                                string serverLog = Encoding.Default.GetString(msg).Trim();//convert to string (for debugging purposes)
+                                string stringMsg = serverLog.Insert(0, "from client with eno " + eno);//this includes who sent the message
+                                Console.WriteLine(serverLog + " from client with eno " + eno);//write the message to the server console
+                                msg = encoded.GetBytes(stringMsg);
+                                userDictionary[enoToConnect].Write(msg, 0, msg.Length);//write the messsage to the desired client stream
+
+                                ns.Write(disconnectTest, 0, disconnectTest.Length);//check if the connection is still alive
+                            }
+                            catch
+                            {
+                                Console.WriteLine("user is no longer online");
+                                break;
+
+
+                            }
 
 
                         }
+
+
+
                     }
 
+                    else
+                    {
+                        ASCIIEncoding encoded = new ASCIIEncoding();
+                        byte[] userNot = encoded.GetBytes("User is not connected");
+
+                        ns.Write(userNot, 0, userNot.Length);
+
+                    }
+
+                    
                     
                     ns.Write(disconnectTest, 0, disconnectTest.Length);//check if the connection is still alive
 
