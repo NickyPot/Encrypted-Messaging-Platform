@@ -99,6 +99,10 @@ namespace clientMessaging
             ASCIIEncoding encoded = new ASCIIEncoding();
             byte[] byteArray = encoded.GetBytes(chatTextBox.Text);
             netstream.Write(byteArray, 0, byteArray.Length);
+            if (importantCheck.Checked)
+            {
+                importantCheck.Checked = false;
+            }
 
 
         }
