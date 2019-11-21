@@ -160,7 +160,7 @@ namespace clientMessaging
                 }
 
                 //if the client the current user is talking to, has ticked the important checkBox
-                if (serverMessage.Contains("abcdf21"))
+                if (serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},"))// used this string to make sure it isnt accidentally included in the message by the user
                 {
                     incomingImportant = true;
 
@@ -184,7 +184,7 @@ namespace clientMessaging
         {
             if (importantCheck.Checked)
             {
-                importantIsSet = "abcdf21";
+                importantIsSet = "pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},";
                 //send to the other client that an important message is coming
                 byte[] important = encoded.GetBytes(importantIsSet);
                 netstream.Write(important, 0, important.Length);
