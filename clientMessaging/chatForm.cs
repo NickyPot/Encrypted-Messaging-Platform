@@ -147,7 +147,7 @@ namespace clientMessaging
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (serverMessage != "") 
+            if (serverMessage != "" || serverMessage == "pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},") 
             {
 
                 if (incomingImportant)
