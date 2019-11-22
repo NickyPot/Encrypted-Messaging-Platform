@@ -147,28 +147,33 @@ namespace clientMessaging
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (serverMessage != "" || serverMessage == "pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},") 
+
+
+            //if the client the current user is talking to, has ticked the important checkBox
+            if (serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},"))// used this string to make sure it isnt accidentally included in the message by the user
+            {
+                incomingImportant = true;
+
+            }
+
+
+            if (serverMessage != "" && serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},") == false) 
             {
 
-                if (incomingImportant)
+                if (incomingImportant)//if the incoming message is important
                 {
                     //add IMPORTANT to string message
                     serverMessage = serverMessage + " [IMPORTANT]";
 
                     //play sound
-
+                    System.Media.SystemSounds.Beep.Play();
 
                     //reset incomingImportant bool
                     incomingImportant = false;
 
                 }
 
-                //if the client the current user is talking to, has ticked the important checkBox
-                if (serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},"))// used this string to make sure it isnt accidentally included in the message by the user
-                {
-                    incomingImportant = true;
-
-                }
+              
 
 
 
