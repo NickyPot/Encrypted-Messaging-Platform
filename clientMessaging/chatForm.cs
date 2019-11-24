@@ -21,6 +21,12 @@ namespace clientMessaging
         string importantIsSet;//used when the user wants to send an important message, used string because it is easier to convert to bytes and conevert back
         bool incomingImportant;//used the user has an incoming important message 
         ASCIIEncoding encoded = new ASCIIEncoding();
+        string encryptedMessage;//temp storage for the message the user wants to send, used to encrypt
+        string enoTotalkToKey;//this is where the encryption key, of the client the user is talking to, is stored
+        int enoToTalkToId;//this where the id, of the user that the current user wants to talk to, is stored
+        string currentEnoKey;//the encryption key of the current user. Used to encrypt out going messages
+        string decryptedMsg;//this is where the decrypted incoming message is stored
+   
 
         public chatForm(string eno)
         {
@@ -28,8 +34,9 @@ namespace clientMessaging
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
             enoOfClient = eno;
+            currentEnoKey = connection.getEncryptionKey(Convert.ToInt32(enoOfClient));
             ASCIIEncoding encoded = new ASCIIEncoding();
-            byte[] byteArray = encoded.GetBytes(enoOfClient);
+            byte[] byteArray = encoded.GetBytes(enoOfClient);//write to the server what the eno of the user currently using the client is
             netstream = startConn();
             netstream.Write(byteArray, 0, byteArray.Length);
 
@@ -67,7 +74,10 @@ namespace clientMessaging
 
         private void connectToUserBtn_Click(object sender, EventArgs e)
         {
-            
+
+            enoToTalkToId = Convert.ToInt32(enoTextBox.Text);
+            enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);//get the encryption key of the user the current user is talking to
+
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
             netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
@@ -76,9 +86,7 @@ namespace clientMessaging
             
             startBackground();
             
-            
-
-            
+                      
 
 
         }
@@ -96,8 +104,10 @@ namespace clientMessaging
         private void sendBtn_Click(object sender, EventArgs e)
         {
 
+            encryptedMessage = encryption.EncryptString(currentEnoKey, chatTextBox.Text);
+
             ASCIIEncoding encoded = new ASCIIEncoding();
-            byte[] byteArray = encoded.GetBytes(chatTextBox.Text);
+            byte[] byteArray = encoded.GetBytes(encryptedMessage);
             netstream.Write(byteArray, 0, byteArray.Length);
             if (importantCheck.Checked)
             {
@@ -173,11 +183,11 @@ namespace clientMessaging
 
                 }
 
-              
 
 
+                decryptedMsg = encryption.DecryptString(enoTotalkToKey, serverMessage);
 
-                chatList.Items.Add(serverMessage);
+                chatList.Items.Add(decryptedMsg);
                                             
                
             }

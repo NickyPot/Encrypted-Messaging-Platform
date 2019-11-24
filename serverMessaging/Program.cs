@@ -83,7 +83,7 @@ namespace ServerTest
                                 Console.WriteLine(serverLog + " from client with eno " + eno);//write the message to the server console
                                 
                                 string stringMsg = serverLog.Insert(0, "from client with eno " + eno);//this includes who sent the message
-                                msg = encoded.GetBytes(stringMsg);
+                               // msg = encoded.GetBytes(stringMsg);
                                 userDictionary[enoToConnect].Write(msg, 0, msg.Length);//write the messsage to the desired client stream
 
                                 ns.Write(disconnectTest, 0, disconnectTest.Length);//check if the connection is still alive

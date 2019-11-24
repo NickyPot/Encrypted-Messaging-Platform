@@ -53,6 +53,7 @@
       <DependentUpon>chatForm.cs</DependentUpon>
     </Compile>
     <Compile Include="connection.cs" />
+    <Compile Include="encryption.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
