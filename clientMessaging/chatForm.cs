@@ -41,6 +41,7 @@ namespace clientMessaging
             netstream = startConn();
             netstream.Write(byteArray, 0, byteArray.Length);
             startBackground();
+            sendBtn.Enabled = false;//disabled since the user isnt connected to anyone
 
 
         }
@@ -83,12 +84,8 @@ namespace clientMessaging
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
             netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
-            
-
-            
-           
-            
-                      
+            sendBtn.Enabled = true;//enable since the user is now connected with someone
+            connectToUserBtn.Enabled = false;//disable since the user is now connected with someone
 
 
         }
@@ -166,7 +163,9 @@ namespace clientMessaging
                 serverMessage = serverMessage.Replace("Lfb1ORIdltExQTB6", string.Empty);
                 chatId = Convert.ToInt32(serverMessage);
                 MessageBox.Show("Connecting with user", "Connection Request");
-            
+                sendBtn.Enabled = true;//enable since the user is now connected with someone
+                connectToUserBtn.Enabled = false;//disable since the user is now connected with someone
+
             }
 
             //if the client the current user is talking to, has ticked the important checkBox
