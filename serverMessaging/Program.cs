@@ -7,7 +7,7 @@ using System.Net.Sockets;
 
 using System.Threading;
 
-namespace ServerTest
+namespace serverMessaging
 {
     class Program
     {
@@ -42,6 +42,8 @@ namespace ServerTest
             TcpClient client = server.EndAcceptTcpClient(result); //this accepts the connection
             NetworkStream ns = client.GetStream();//get the netstream from the client
             int eno;//this will be used to temp store the employee number of the user that has connected to the server 
+            string chatId;
+            ASCIIEncoding encoded = new ASCIIEncoding();
 
             /* This section will take in the employe number that the client application sends 
             * and create an entry in the user dictionairy that is used to map all the connected clients
@@ -69,13 +71,26 @@ namespace ServerTest
 
                     if (userDictionary.ContainsKey(enoToConnect))
                     {
+
+                        //get the chat ID and send it to both clients
+                        chatId = connection.getChatId(eno, enoToConnect) + "Lfb1ORIdltExQTB6";
+                        byte[] chatIdbyte = encoded.GetBytes(chatId);
+                        
+                        ns.Write(chatIdbyte, 0, chatIdbyte.Length);
+                        userDictionary[enoToConnect].Write(chatIdbyte, 0, chatIdbyte.Length);
+                       
+
+
+
+
+
                         //here the server will try to get the message from the client and write it into the netstream of the client the user wants to talk to
                         while (true)
                         {
 
                             try
                             {
-                                ASCIIEncoding encoded = new ASCIIEncoding();
+                                
                                 byte[] msg = new byte[1024];//this byte will take the message that the client wants to exchange
                                 ns.Read(msg, 0, msg.Length);//read the byte
                                 
@@ -105,7 +120,7 @@ namespace ServerTest
 
                     else
                     {
-                        ASCIIEncoding encoded = new ASCIIEncoding();
+                        
                         byte[] userNot = encoded.GetBytes("User is not connected");
 
                         ns.Write(userNot, 0, userNot.Length);

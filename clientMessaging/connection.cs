@@ -71,5 +71,54 @@ namespace clientMessaging
         
         }
 
+        public static int getEnoToTalkTo(int currentEno, int chatId)
+        {
+            int enoToTalkTo;
+
+            //open sql connection
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            preppedCommand.CommandText = "SELECT Eno1 FROM Chats WHERE ChatId = @chatId";
+            SqlParameter chatIdParam = new SqlParameter("@chatId", SqlDbType.Int);//employee number parameter
+
+
+            chatIdParam.Value = chatId;
+
+
+            preppedCommand.Parameters.Add(chatIdParam);
+
+            preppedCommand.Prepare();
+
+
+
+            using (var reader = preppedCommand.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+
+                    enoToTalkTo = Convert.ToInt32(reader[0]);
+
+                    return enoToTalkTo;
+                }
+                else
+                {
+
+                    return 0;
+                }
+
+
+            }
+
+
+
+            
+        }
+
+
+
+
     }
 }

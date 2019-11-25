@@ -22,10 +22,11 @@ namespace clientMessaging
         bool incomingImportant;//used the user has an incoming important message 
         ASCIIEncoding encoded = new ASCIIEncoding();
         string encryptedMessage;//temp storage for the message the user wants to send, used to encrypt
-        string enoTotalkToKey;//this is where the encryption key, of the client the user is talking to, is stored
+        string enoTotalkToKey = "";//this is where the encryption key, of the client the user is talking to, is stored
         int enoToTalkToId;//this where the id, of the user that the current user wants to talk to, is stored
         string currentEnoKey;//the encryption key of the current user. Used to encrypt out going messages
         string decryptedMsg;//this is where the decrypted incoming message is stored
+        int chatId;//this is where the chat ID number will be stored
    
 
         public chatForm(string eno)
@@ -39,6 +40,7 @@ namespace clientMessaging
             byte[] byteArray = encoded.GetBytes(enoOfClient);//write to the server what the eno of the user currently using the client is
             netstream = startConn();
             netstream.Write(byteArray, 0, byteArray.Length);
+            startBackground();
 
 
         }
@@ -84,7 +86,7 @@ namespace clientMessaging
             
 
             
-            startBackground();
+           
             
                       
 
@@ -158,16 +160,24 @@ namespace clientMessaging
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
 
+            //this will get the chat id in the beginning of the chat
+            if (serverMessage.Contains("Lfb1ORIdltExQTB6"))
+            {
+                serverMessage = serverMessage.Replace("Lfb1ORIdltExQTB6", string.Empty);
+                chatId = Convert.ToInt32(serverMessage);
+                MessageBox.Show("Connecting with user", "Connection Request");
+            
+            }
 
             //if the client the current user is talking to, has ticked the important checkBox
-            if (serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},"))// used this string to make sure it isnt accidentally included in the message by the user
+            else if (serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},"))// used this string to make sure it isnt accidentally included in the message by the user
             {
                 incomingImportant = true;
 
             }
 
 
-            if (serverMessage != "" && serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},") == false) 
+            else if (serverMessage != "" && serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},") == false) 
             {
 
                 if (incomingImportant)//if the incoming message is important
@@ -183,7 +193,19 @@ namespace clientMessaging
 
                 }
 
+                //this will only happen when the user currently using the application did not start the chat with the other client
+                if (enoTotalkToKey == "")
+                {
+                    //get the employee number of the user, the current user wants to talk to
+                   enoToTalkToId = connection.getEnoToTalkTo(Convert.ToInt32(enoOfClient), chatId);
+                    //get their encryption key
+                   enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);
 
+                    //give the server which employee number the current user is talking to
+                    byte[] enoToTalkTo = encoded.GetBytes(enoToTalkToId.ToString());
+                    netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
+
+                }
 
                 decryptedMsg = encryption.DecryptString(enoTotalkToKey, serverMessage);
 
