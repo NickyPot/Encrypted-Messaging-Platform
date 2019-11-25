@@ -180,10 +180,27 @@ namespace clientMessaging
             else if (serverMessage != "" && serverMessage.Contains("pne8Aj+g`E;fPeKu{nKV&,#ZZ.wm&aczfR#A?-v4=*@V]W@[Xv4`HJ8#r}s^*},") == false) 
             {
 
+                //this will only happen when the user currently using the application did not start the chat with the other client
+                if (enoTotalkToKey == "")
+                {
+                    //get the employee number of the user, the current user wants to talk to
+                    enoToTalkToId = connection.getEnoToTalkTo(Convert.ToInt32(enoOfClient), chatId);
+                    //get their encryption key
+                    enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);
+
+                    //give the server which employee number the current user is talking to
+                    byte[] enoToTalkTo = encoded.GetBytes(enoToTalkToId.ToString());
+                    netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
+
+                }
+
+
+                decryptedMsg = encryption.DecryptString(enoTotalkToKey, serverMessage);//decrypts message using the key of the other user
+
                 if (incomingImportant)//if the incoming message is important
                 {
                     //add IMPORTANT to string message
-                    serverMessage = serverMessage + " [IMPORTANT]";
+                    decryptedMsg = decryptedMsg + " [IMPORTANT]";
 
                     //play sound
                     System.Media.SystemSounds.Beep.Play();
@@ -193,25 +210,8 @@ namespace clientMessaging
 
                 }
 
-                //this will only happen when the user currently using the application did not start the chat with the other client
-                if (enoTotalkToKey == "")
-                {
-                    //get the employee number of the user, the current user wants to talk to
-                   enoToTalkToId = connection.getEnoToTalkTo(Convert.ToInt32(enoOfClient), chatId);
-                    //get their encryption key
-                   enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);
-
-                    //give the server which employee number the current user is talking to
-                    byte[] enoToTalkTo = encoded.GetBytes(enoToTalkToId.ToString());
-                    netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
-
-                }
-
-
-
-
-
-                decryptedMsg = encryption.DecryptString(enoTotalkToKey, serverMessage);
+            
+                
                 //this will store the incoming message in db
                 chatList.Items.Add(decryptedMsg);
 
