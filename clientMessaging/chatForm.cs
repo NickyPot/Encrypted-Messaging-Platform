@@ -207,11 +207,29 @@ namespace clientMessaging
 
                 }
 
-                decryptedMsg = encryption.DecryptString(enoTotalkToKey, serverMessage);
 
+
+
+
+                decryptedMsg = encryption.DecryptString(enoTotalkToKey, serverMessage);
+                //this will store the incoming message in db
                 chatList.Items.Add(decryptedMsg);
-                                            
-               
+
+                int important;
+                if (decryptedMsg.Contains("[IMPORTANT]"))
+                {
+                    important = 1;
+
+                }
+                else
+                {
+                    important = 0;
+                }
+                //MessageBox.Show(chatLine.ToString());
+
+                connection.storeMessage(serverMessage, important, chatId, enoToTalkToId);
+                //this is where the storage of the message ends
+
             }
             
         }
@@ -235,6 +253,11 @@ namespace clientMessaging
             {
                 importantIsSet = "";
             }
+        }
+
+        private void chatForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }

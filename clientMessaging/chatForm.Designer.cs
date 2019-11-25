@@ -124,6 +124,7 @@
             this.Controls.Add(this.chatTextBox);
             this.Name = "chatForm";
             this.Text = "chatForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.chatForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

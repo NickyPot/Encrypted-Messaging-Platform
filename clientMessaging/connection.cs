@@ -117,6 +117,46 @@ namespace clientMessaging
             
         }
 
+        public static void storeMessage(string message, int important, int chatId, int eno)
+        {
+
+            //open sql connection
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            //insert into the chats table the employee number of the two employees that are trying to talk
+            //get the last inserted id (it is given to the two clients in order to archibe their chats)
+            preppedCommand.CommandText = "insert into chatline (ChatLine, Important, ChatId, Eno) values (@message, @important, @chatId, @eno); ";
+            SqlParameter msgParam = new SqlParameter("@message", SqlDbType.VarChar);//employee number parameter
+            SqlParameter importantParam = new SqlParameter("@important", SqlDbType.Bit);//employee number parameter
+            SqlParameter chatIdParam = new SqlParameter("@chatId", SqlDbType.Int);//employee number parameter
+            SqlParameter enoParam = new SqlParameter("@eno", SqlDbType.Int);//employee number parameter
+
+            msgParam.Value = message;
+            msgParam.Size = 400;
+            importantParam.Value = important;
+            chatIdParam.Value = chatId;
+            enoParam.Value = eno;
+
+            preppedCommand.Parameters.Add(msgParam);
+            preppedCommand.Parameters.Add(importantParam);
+            preppedCommand.Parameters.Add(chatIdParam);
+            preppedCommand.Parameters.Add(enoParam);
+
+            preppedCommand.Prepare();
+
+
+
+            preppedCommand.ExecuteNonQuery();
+
+
+
+
+
+        }
+
 
 
 
