@@ -76,7 +76,7 @@ namespace serverMessaging
                         chatId = connection.getChatId(eno, enoToConnect) + "Lfb1ORIdltExQTB6";
                         byte[] chatIdbyte = encoded.GetBytes(chatId);
                         
-                        ns.Write(chatIdbyte, 0, chatIdbyte.Length);
+                       // ns.Write(chatIdbyte, 0, chatIdbyte.Length);
                         userDictionary[enoToConnect].Write(chatIdbyte, 0, chatIdbyte.Length);
                        
 
