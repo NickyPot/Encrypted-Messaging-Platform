@@ -9,7 +9,7 @@ using System.Data;
 
 namespace clientMessaging
 {
-    class connection
+    public class connection
     {
 
         public static SqlConnection startConn()
@@ -119,7 +119,7 @@ namespace clientMessaging
             
         }
 
-        public static void storeMessage(string message, int important, int chatId, int eno)
+        public static void storeMessage(string message, int important, int? chatId, int eno)
         {
 
             //open sql connection

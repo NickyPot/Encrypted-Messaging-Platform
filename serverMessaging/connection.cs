@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace serverMessaging
 {
-    class connection
+    public class connection
     {
         public static SqlConnection startConn()
         {
@@ -79,7 +79,7 @@ namespace serverMessaging
 
             SqlCommand preppedCommand = new SqlCommand(null, conn);
 
-            preppedCommand.CommandText = "delete from ChatLine where Important = 0;update ChatLine set ChatID = null where Important = 1; delete from Chats where 1 = 1; ";
+            preppedCommand.CommandText = "delete from ChatLine where Important = 0;update ChatLine set ChatID = null where Important = 1; delete from Chats where ChatId !=90; ";
 
             preppedCommand.Prepare();
 
