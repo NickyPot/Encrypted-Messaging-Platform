@@ -45,6 +45,7 @@ namespace clientMessaging
             startBackground();
             sendBtn.Enabled = false;//disabled since the user isnt connected to anyone
             connectToUserBtn.Enabled = false;// disabled before the user picks a user to connect to
+            disconnectBtn.Enabled = false;//disabled since the user is not connected to anyone
 
 
         }
@@ -107,6 +108,7 @@ namespace clientMessaging
             sendBtn.Enabled = true;//enable since the user is now connected with someone
             connectToUserBtn.Enabled = false;//disable since the user is now connected with someone
             availableUsersBox.Enabled = false;//disable combo box since the user is connected
+            disconnectBtn.Enabled = true;//enabled since the user is  connected to someone
 
 
         }
@@ -189,6 +191,7 @@ namespace clientMessaging
                 sendBtn.Enabled = true;//enable since the user is now connected with someone
                 connectToUserBtn.Enabled = false;//disable since the user is now connected with someone
                 availableUsersBox.Enabled = false;
+                disconnectBtn.Enabled = true;//enabled since the user is  connected to someone
 
             }
 
@@ -309,6 +312,15 @@ namespace clientMessaging
         {
             connectToUserBtn.Enabled = true;
            
+        }
+
+        private void disconnectBtn_Click(object sender, EventArgs e)
+        {
+            netstream.Close();
+            client.Close();
+            Form1 form = new Form1();
+            form.Show();
+            this.Close();
         }
     }
 }

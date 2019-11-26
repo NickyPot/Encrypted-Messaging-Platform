@@ -35,11 +35,12 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.importantCheck = new System.Windows.Forms.CheckBox();
             this.availableUsersBox = new System.Windows.Forms.ComboBox();
+            this.disconnectBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // connectToUserBtn
             // 
-            this.connectToUserBtn.Location = new System.Drawing.Point(372, 259);
+            this.connectToUserBtn.Location = new System.Drawing.Point(260, 267);
             this.connectToUserBtn.Name = "connectToUserBtn";
             this.connectToUserBtn.Size = new System.Drawing.Size(75, 40);
             this.connectToUserBtn.TabIndex = 11;
@@ -94,7 +95,7 @@
             // availableUsersBox
             // 
             this.availableUsersBox.FormattingEnabled = true;
-            this.availableUsersBox.Location = new System.Drawing.Point(162, 278);
+            this.availableUsersBox.Location = new System.Drawing.Point(93, 278);
             this.availableUsersBox.Name = "availableUsersBox";
             this.availableUsersBox.Size = new System.Drawing.Size(121, 21);
             this.availableUsersBox.TabIndex = 14;
@@ -102,11 +103,22 @@
             this.availableUsersBox.DropDown += new System.EventHandler(this.availableUsersBox_DropDown);
             this.availableUsersBox.SelectionChangeCommitted += new System.EventHandler(this.availableUsersBox_SelectionChangeCommitted);
             // 
+            // disconnectBtn
+            // 
+            this.disconnectBtn.Location = new System.Drawing.Point(361, 267);
+            this.disconnectBtn.Name = "disconnectBtn";
+            this.disconnectBtn.Size = new System.Drawing.Size(86, 40);
+            this.disconnectBtn.TabIndex = 15;
+            this.disconnectBtn.Text = "Disconnect";
+            this.disconnectBtn.UseVisualStyleBackColor = true;
+            this.disconnectBtn.Click += new System.EventHandler(this.disconnectBtn_Click);
+            // 
             // chatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(530, 405);
+            this.Controls.Add(this.disconnectBtn);
             this.Controls.Add(this.availableUsersBox);
             this.Controls.Add(this.importantCheck);
             this.Controls.Add(this.connectToUserBtn);
@@ -131,5 +143,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.CheckBox importantCheck;
         private System.Windows.Forms.ComboBox availableUsersBox;
+        private System.Windows.Forms.Button disconnectBtn;
     }
 }
