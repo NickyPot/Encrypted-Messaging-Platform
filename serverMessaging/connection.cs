@@ -86,6 +86,30 @@ namespace serverMessaging
             preppedCommand.ExecuteNonQuery();
         }
 
+        public static void setOnlineStatus(int eno, int status)
+        {
+
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            preppedCommand.CommandText = "update users set Online = @online where eno = @eno; ";
+            SqlParameter onlineParam = new SqlParameter("@online", SqlDbType.Bit);//employee number parameter
+            SqlParameter enoParam = new SqlParameter("@eno", SqlDbType.Int);//employee number parameter
+
+            onlineParam.Value = status;
+            enoParam.Value = eno;
+
+            preppedCommand.Parameters.Add(onlineParam);
+            preppedCommand.Parameters.Add(enoParam);
+
+            preppedCommand.Prepare();
+
+            preppedCommand.ExecuteNonQuery();
+
+        }
+
 
     }
 }

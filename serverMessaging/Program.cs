@@ -36,7 +36,7 @@ namespace serverMessaging
                     connection.deleteArchive();
 
                 }
-                Console.WriteLine(now);
+                
                 Thread.Sleep(500);
             
             }
@@ -75,6 +75,7 @@ namespace serverMessaging
             
             eno = Int32.Parse(Encoding.Default.GetString(enoByte).Trim());//put the employee number in the temp val
             userDictionary.Add(eno, ns);// add the client details (eno and netstream) to the dictionairy
+            connection.setOnlineStatus(eno, 1);// sets the status of the users to online in db
 
 
             //this will be executed as long as the client is connected
@@ -158,6 +159,7 @@ namespace serverMessaging
 
                     Console.WriteLine("client with eno " + eno +" disconnected");
                     userDictionary.Remove(eno);
+                    connection.setOnlineStatus(eno, 0);// sets the status of the users to offline in db
                     break;
                 
                 }
