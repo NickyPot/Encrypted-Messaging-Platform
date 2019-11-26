@@ -136,6 +136,7 @@ namespace serverMessaging
                 {
 
                     Console.WriteLine("client with eno " + eno +" disconnected");
+                    userDictionary.Remove(eno);
                     break;
                 
                 }
