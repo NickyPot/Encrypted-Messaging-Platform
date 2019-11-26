@@ -116,6 +116,8 @@ namespace clientMessaging
                 importantCheck.Checked = false;
             }
 
+            chatList.Items.Add("You: " + chatTextBox.Text);
+
 
         }
 
