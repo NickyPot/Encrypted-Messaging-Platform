@@ -156,6 +156,7 @@
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);

@@ -65,15 +65,31 @@ namespace clientMessaging
 
         private NetworkStream startConn()
         {
+            try
+            {
+                chatList.Items.Add("Connecting to server");
+                client.Connect("192.168.0.13", 9999);//connect to server ip
+                chatList.Items.Insert(0, "Connected and ready to send");
+                netstream = client.GetStream();//get server stream
 
-            
+               
 
-            chatList.Items.Add("Connecting to server");
-            client.Connect("192.168.0.13", 9999);//connect to server ip
-            chatList.Items.Insert(0, "Connected and ready to send");
-            netstream = client.GetStream();//get server stream
+            }
+
+            catch
+            {
+                DialogResult ok = MessageBox.Show("The server is offline! The application will now close", "Error!", MessageBoxButtons.OK);
+
+                if (ok == DialogResult.OK)
+                {
+                    Application.Exit();
+
+                }
+            }
+
 
             return netstream;
+
         }
 
 

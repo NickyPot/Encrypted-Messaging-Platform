@@ -122,6 +122,7 @@
             this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.chatList);
             this.Controls.Add(this.chatTextBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "chatForm";
             this.Text = "chatForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.chatForm_FormClosed);
