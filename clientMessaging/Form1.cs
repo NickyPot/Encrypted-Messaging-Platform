@@ -15,6 +15,8 @@ namespace clientMessaging
 {
     public partial class Form1 : Form
     {
+
+
         public Form1()
         {
             InitializeComponent();
@@ -40,36 +42,13 @@ namespace clientMessaging
 
                 if (Int32.TryParse(enoTextBox.Text, out int result))
                 {
-                    SqlConnection conn = connection.startConn();
+                    string password = passwordTextBox.Text + connection.getEncryptionKey(Convert.ToInt32(enoTextBox.Text));
 
-
-                    //here will be the prepared statement
-
-                    conn.Open();
-
-                    SqlCommand preppedCommand = new SqlCommand(null, conn);
-                    preppedCommand.CommandText = "SELECT * FROM users WHERE eno = @eno AND pass = @password";
-                    SqlParameter enoParam = new SqlParameter("@eno", SqlDbType.Int);//employee number parameter
-                    SqlParameter passParam = new SqlParameter("@password", SqlDbType.VarChar, 300);//password parameter
-
-                    enoParam.Value = enoTextBox.Text;
-                    passParam.Value = passwordTextBox.Text;
-
-                    preppedCommand.Parameters.Add(enoParam);
-                    preppedCommand.Parameters.Add(passParam);
-
-                    preppedCommand.Prepare();
-
-                    SqlDataReader users = preppedCommand.ExecuteReader();
-
-
-                    if (users.Read())
+                    password = encryption.getSha(password);
+                    if (connection.checkUserExists(Convert.ToInt32(enoTextBox.Text), password))
                     {
-
-
                         chatForm chatForm = new chatForm(enoTextBox.Text);
                         chatForm.Show();
-                        conn.Close();
                         this.Hide();
 
                     }

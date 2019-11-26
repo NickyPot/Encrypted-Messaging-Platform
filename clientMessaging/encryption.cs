@@ -69,10 +69,31 @@ namespace clientMessaging
 
         }
 
+        public static string getSha(string password)
+        {
+           
 
-      
+            SHA512 sha = new SHA512Managed();
+            byte[] bytes = Encoding.Default.GetBytes(password);
+            byte[] hash = sha.ComputeHash(bytes);
 
-}
+
+            return hashToString(hash);
+        }
+
+        private static string hashToString(byte[] hash)
+        {
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                result.Append(hash[i].ToString("X2"));
+            }
+            return result.ToString();
+        }
+
+
+    }
      
 
     

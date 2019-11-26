@@ -244,6 +244,43 @@ namespace clientMessaging
 
         }
 
+        public static bool checkUserExists(int eno, string password)
+        {
+
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+            preppedCommand.CommandText = "SELECT * FROM users WHERE eno = @eno AND pass = @password";
+            SqlParameter enoParam = new SqlParameter("@eno", SqlDbType.Int);//employee number parameter
+            SqlParameter passParam = new SqlParameter("@password", SqlDbType.VarChar, 300);//password parameter
+
+            enoParam.Value = eno;
+            passParam.Value = password;
+
+            preppedCommand.Parameters.Add(enoParam);
+            preppedCommand.Parameters.Add(passParam);
+
+            preppedCommand.Prepare();
+
+            SqlDataReader users = preppedCommand.ExecuteReader();
+
+
+            if (users.Read())
+            {
+
+
+                return true;
+
+            }
+
+            else
+            {
+                return false;
+            }
+
+        }
+
 
 
 
