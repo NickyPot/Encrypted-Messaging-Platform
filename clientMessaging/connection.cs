@@ -159,6 +159,56 @@ namespace clientMessaging
 
         }
 
+        public static string getEName(int eno)
+        {
+            string name;
+
+            //open sql connection
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            preppedCommand.CommandText = "SELECT EName FROM users WHERE eno = @eno";
+            SqlParameter enoParam = new SqlParameter("@eno", SqlDbType.Int);//employee number parameter
+
+
+            enoParam.Value = eno;
+
+
+            preppedCommand.Parameters.Add(enoParam);
+
+            preppedCommand.Prepare();
+
+
+
+            using (var reader = preppedCommand.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+
+                    name = reader[0].ToString();
+                    conn.Close();
+
+                    return name;
+                }
+                else
+                {
+                    conn.Close();
+                    return "";
+                }
+
+
+            }
+
+
+
+
+
+            return name;        
+        
+        }
+
 
 
 

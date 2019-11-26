@@ -24,6 +24,7 @@ namespace clientMessaging
         string encryptedMessage;//temp storage for the message the user wants to send, used to encrypt
         string enoTotalkToKey = "";//this is where the encryption key, of the client the user is talking to, is stored
         int enoToTalkToId;//this where the id, of the user that the current user wants to talk to, is stored
+        string eName;//the name of the person that the current user is talking to (used to display it in the message)
         string currentEnoKey;//the encryption key of the current user. Used to encrypt out going messages
         string decryptedMsg;//this is where the decrypted incoming message is stored
         int chatId;//this is where the chat ID number will be stored
@@ -81,6 +82,7 @@ namespace clientMessaging
 
             enoToTalkToId = Convert.ToInt32(enoTextBox.Text);
             enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);//get the encryption key of the user the current user is talking to
+            eName = connection.getEName(enoToTalkToId);//get name of the user that the current user wants to talk to
 
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
@@ -183,8 +185,10 @@ namespace clientMessaging
                 //this will only happen when the user currently using the application did not start the chat with the other client
                 if (enoTotalkToKey == "")
                 {
-                    //get the employee number of the user, the current user wants to talk to
+                    //get the employee numberr of the user that is trying to talk to the current user
                     enoToTalkToId = connection.getEnoToTalkTo(Convert.ToInt32(enoOfClient), chatId);
+                    //get the name of the user that is trying to talk to the current user
+                    eName = connection.getEName(enoToTalkToId);
                     //get their encryption key
                     enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);
 
@@ -210,8 +214,10 @@ namespace clientMessaging
 
                 }
 
-            
-                
+
+                // add the name of the user to the chatline
+                decryptedMsg = eName + ": " + decryptedMsg;
+
                 //this will store the incoming message in db
                 chatList.Items.Add(decryptedMsg);
 
