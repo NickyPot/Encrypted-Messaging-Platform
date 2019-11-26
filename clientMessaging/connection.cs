@@ -205,7 +205,7 @@ namespace clientMessaging
 
 
 
-            return name;        
+            
         
         }
 

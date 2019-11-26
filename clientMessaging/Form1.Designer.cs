@@ -36,6 +36,8 @@
             this.loginBtn = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.enoTextBox = new System.Windows.Forms.TextBox();
+            this.enoLabel = new System.Windows.Forms.Label();
+            this.passLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -115,11 +117,31 @@
             // 
             // enoTextBox
             // 
-            this.enoTextBox.Location = new System.Drawing.Point(498, 228);
+            this.enoTextBox.Location = new System.Drawing.Point(498, 238);
             this.enoTextBox.Name = "enoTextBox";
             this.enoTextBox.Size = new System.Drawing.Size(137, 20);
-            this.enoTextBox.TabIndex = 18;
-            this.enoTextBox.Text = "Employee Number";
+            this.enoTextBox.TabIndex = 21;
+            this.enoTextBox.Text = "For Example: 2";
+            this.enoTextBox.TextChanged += new System.EventHandler(this.enoTextBox_TextChanged);
+            this.enoTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.enoTextBox_KeyPress);
+            // 
+            // enoLabel
+            // 
+            this.enoLabel.AutoSize = true;
+            this.enoLabel.Location = new System.Drawing.Point(495, 222);
+            this.enoLabel.Name = "enoLabel";
+            this.enoLabel.Size = new System.Drawing.Size(93, 13);
+            this.enoLabel.TabIndex = 22;
+            this.enoLabel.Text = "Employee Number";
+            // 
+            // passLabel
+            // 
+            this.passLabel.AutoSize = true;
+            this.passLabel.Location = new System.Drawing.Point(495, 270);
+            this.passLabel.Name = "passLabel";
+            this.passLabel.Size = new System.Drawing.Size(53, 13);
+            this.passLabel.TabIndex = 23;
+            this.passLabel.Text = "Password";
             // 
             // Form1
             // 
@@ -127,10 +149,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(799, 486);
+            this.Controls.Add(this.passLabel);
+            this.Controls.Add(this.enoLabel);
+            this.Controls.Add(this.enoTextBox);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.passwordTextBox);
-            this.Controls.Add(this.enoTextBox);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -153,6 +177,8 @@
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.TextBox enoTextBox;
+        private System.Windows.Forms.Label enoLabel;
+        private System.Windows.Forms.Label passLabel;
     }
 }
 
