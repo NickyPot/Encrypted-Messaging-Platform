@@ -27,7 +27,8 @@ namespace clientMessaging
         string currentEnoKey;//the encryption key of the current user. Used to encrypt out going messages
         string decryptedMsg;//this is where the decrypted incoming message is stored
         int chatId;//this is where the chat ID number will be stored
-   
+        TcpClient client = new TcpClient();
+
 
         public chatForm(string eno)
         {
@@ -64,7 +65,7 @@ namespace clientMessaging
         private NetworkStream startConn()
         {
 
-            TcpClient client = new TcpClient();
+            
 
             chatList.Items.Add("Connecting to server");
             client.Connect("192.168.0.13", 9999);//connect to server ip
@@ -256,7 +257,9 @@ namespace clientMessaging
 
         private void chatForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+            netstream.Close();
+            client.Close();
+            Application.Exit();
         }
     }
 }

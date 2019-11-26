@@ -54,12 +54,13 @@ namespace clientMessaging
 
                     encryptionKey = reader[0].ToString();
                     encryptionKey = encryptionKey.Replace("\r\n", string.Empty);
+                    conn.Close();
                     return encryptionKey;
 
                 }
                 else
                 {
-
+                    conn.Close();
                     return "failed";
                 }
 
@@ -100,12 +101,13 @@ namespace clientMessaging
                 {
 
                     enoToTalkTo = Convert.ToInt32(reader[0]);
+                    conn.Close();
 
                     return enoToTalkTo;
                 }
                 else
                 {
-
+                    conn.Close();
                     return 0;
                 }
 
@@ -152,7 +154,7 @@ namespace clientMessaging
             preppedCommand.ExecuteNonQuery();
 
 
-
+            conn.Close();
 
 
         }

@@ -67,6 +67,7 @@ namespace clientMessaging
                     
                     chatForm chatForm = new chatForm(enoTextBox.Text);
                     chatForm.Show();
+                    conn.Close();
                     this.Hide();
 
                 }
