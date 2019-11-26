@@ -209,6 +209,41 @@ namespace clientMessaging
         
         }
 
+        public static List<int> getAvailableUsers()
+        {
+
+            int it = 0;
+            List<int> availableUsers = new List<int>();
+            //open sql connection
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            preppedCommand.CommandText = "select eno from users where Online = 1";
+            
+        
+            preppedCommand.Prepare();
+
+
+
+            using (var reader = preppedCommand.ExecuteReader())
+            {
+                
+                while (reader.Read())
+                {
+                    availableUsers.Add(Convert.ToInt32(reader[it])); 
+                
+                }
+
+                conn.Close();
+                return availableUsers;
+            }
+
+
+
+        }
+
 
 
 

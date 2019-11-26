@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             this.connectToUserBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.enoTextBox = new System.Windows.Forms.TextBox();
             this.sendBtn = new System.Windows.Forms.Button();
             this.chatList = new System.Windows.Forms.ListBox();
             this.chatTextBox = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.importantCheck = new System.Windows.Forms.CheckBox();
+            this.availableUsersBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // connectToUserBtn
@@ -47,24 +46,6 @@
             this.connectToUserBtn.Text = "Connect To User";
             this.connectToUserBtn.UseVisualStyleBackColor = true;
             this.connectToUserBtn.Click += new System.EventHandler(this.connectToUserBtn_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(200, 286);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "ID of user to connect to";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // enoTextBox
-            // 
-            this.enoTextBox.Location = new System.Drawing.Point(93, 280);
-            this.enoTextBox.Name = "enoTextBox";
-            this.enoTextBox.Size = new System.Drawing.Size(100, 20);
-            this.enoTextBox.TabIndex = 9;
-            this.enoTextBox.TextChanged += new System.EventHandler(this.enoTextBox_TextChanged);
             // 
             // sendBtn
             // 
@@ -110,15 +91,25 @@
             this.importantCheck.UseVisualStyleBackColor = true;
             this.importantCheck.CheckedChanged += new System.EventHandler(this.importantCheck_CheckedChanged);
             // 
+            // availableUsersBox
+            // 
+            this.availableUsersBox.FormattingEnabled = true;
+            this.availableUsersBox.Location = new System.Drawing.Point(162, 278);
+            this.availableUsersBox.Name = "availableUsersBox";
+            this.availableUsersBox.Size = new System.Drawing.Size(121, 21);
+            this.availableUsersBox.TabIndex = 14;
+            this.availableUsersBox.Text = "Available Users";
+            this.availableUsersBox.DropDown += new System.EventHandler(this.availableUsersBox_DropDown);
+            this.availableUsersBox.SelectionChangeCommitted += new System.EventHandler(this.availableUsersBox_SelectionChangeCommitted);
+            // 
             // chatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(530, 405);
+            this.Controls.Add(this.availableUsersBox);
             this.Controls.Add(this.importantCheck);
             this.Controls.Add(this.connectToUserBtn);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.enoTextBox);
             this.Controls.Add(this.sendBtn);
             this.Controls.Add(this.chatList);
             this.Controls.Add(this.chatTextBox);
@@ -134,12 +125,11 @@
         #endregion
 
         private System.Windows.Forms.Button connectToUserBtn;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox enoTextBox;
         private System.Windows.Forms.Button sendBtn;
         private System.Windows.Forms.ListBox chatList;
         private System.Windows.Forms.TextBox chatTextBox;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.CheckBox importantCheck;
+        private System.Windows.Forms.ComboBox availableUsersBox;
     }
 }

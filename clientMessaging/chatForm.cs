@@ -44,6 +44,7 @@ namespace clientMessaging
             netstream.Write(byteArray, 0, byteArray.Length);
             startBackground();
             sendBtn.Enabled = false;//disabled since the user isnt connected to anyone
+            connectToUserBtn.Enabled = false;// disabled before the user picks a user to connect to
 
 
         }
@@ -96,15 +97,16 @@ namespace clientMessaging
         private void connectToUserBtn_Click(object sender, EventArgs e)
         {
 
-            enoToTalkToId = Convert.ToInt32(enoTextBox.Text);
+            enoToTalkToId = Convert.ToInt32(availableUsersBox.SelectedItem.ToString());
             enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);//get the encryption key of the user the current user is talking to
             eName = connection.getEName(enoToTalkToId);//get name of the user that the current user wants to talk to
 
             Thread.Sleep(500);
-            byte[] enoToTalkTo = encoded.GetBytes(enoTextBox.Text);
+            byte[] enoToTalkTo = encoded.GetBytes(availableUsersBox.SelectedItem.ToString());
             netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
             sendBtn.Enabled = true;//enable since the user is now connected with someone
             connectToUserBtn.Enabled = false;//disable since the user is now connected with someone
+            availableUsersBox.Enabled = false;//disable combo box since the user is connected
 
 
         }
@@ -186,6 +188,7 @@ namespace clientMessaging
                 MessageBox.Show("Connecting with user", "Connection Request");
                 sendBtn.Enabled = true;//enable since the user is now connected with someone
                 connectToUserBtn.Enabled = false;//disable since the user is now connected with someone
+                availableUsersBox.Enabled = false;
 
             }
 
@@ -284,6 +287,28 @@ namespace clientMessaging
             netstream.Close();
             client.Close();
             Application.Exit();
+        }
+
+        private void availableUsersBox_DropDown(object sender, EventArgs e)
+        {
+            availableUsersBox.Items.Clear();
+            List<int> availableUsers = connection.getAvailableUsers();
+            foreach (int user in availableUsers)
+            {
+                if (user != Convert.ToInt32(enoOfClient))
+                {
+                    availableUsersBox.Items.Add(user);
+
+                }
+                
+            
+            }
+        }
+
+        private void availableUsersBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            connectToUserBtn.Enabled = true;
+           
         }
     }
 }
