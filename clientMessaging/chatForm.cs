@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using System.Net;
 
 namespace clientMessaging
 {
@@ -70,8 +71,17 @@ namespace clientMessaging
             try
             {
                 chatList.Items.Add("Connecting to server");
-                client.Connect("192.168.0.13", 9999);//connect to server ip
-                chatList.Items.Insert(0, "Connected and ready to send");
+                string ipAddress ="";
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (var ip in host.AddressList)
+                {
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        ipAddress = ip.ToString();
+                    }
+                }
+                client.Connect(ipAddress, 9999);//connect to server ip
+                chatList.Items.Add("Connected and ready to send");
                 netstream = client.GetStream();//get server stream
 
                
@@ -318,9 +328,8 @@ namespace clientMessaging
         {
             netstream.Close();
             client.Close();
-            Form1 form = new Form1();
-            form.Show();
-            this.Close();
+            
+            Application.Exit();
         }
     }
 }
