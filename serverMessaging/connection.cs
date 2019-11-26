@@ -72,6 +72,20 @@ namespace serverMessaging
 
         }
 
+        public static void deleteArchive()
+        {
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            preppedCommand.CommandText = "delete from ChatLine where Important = 0;update ChatLine set ChatID = null where Important = 1; delete from Chats where 1 = 1; ";
+
+            preppedCommand.Prepare();
+
+            preppedCommand.ExecuteNonQuery();
+        }
+
 
     }
 }

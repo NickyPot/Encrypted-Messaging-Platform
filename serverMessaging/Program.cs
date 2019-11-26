@@ -18,7 +18,28 @@ namespace serverMessaging
         {
             Program main = new Program();
             main.server_start();
-            Console.ReadLine();
+            //this part of the code will check what the date is and decide if the period of 6 months has passed. If yes it will empty all chats, except the important ones
+            DateTime serverStart = DateTime.UtcNow;// the time now
+            DateTime after = serverStart.AddMonths(6);// same time but in 6 months
+
+            //string for the current time (excludes year for the purpose of comparison)
+            string timeString = serverStart.Day.ToString() + serverStart.Month.ToString() + serverStart.Hour.ToString() + serverStart.Minute.ToString() + serverStart.Second.ToString();
+            //string for the time in 6 months (excludes year for the purpose of comparison)
+            string timeAfterString = after.Day.ToString() + after.Month.ToString() + after.Hour.ToString() + after.Minute.ToString() + after.Second.ToString();
+            while (true)
+            {
+                DateTime now = DateTime.UtcNow;
+                string nowString = now.Day.ToString() + now.Month.ToString() + now.Hour.ToString() + now.Minute.ToString() + now.Second.ToString();
+                //if it is the same time in the next year or 6 months after
+                if (nowString == timeString || nowString == timeAfterString)
+                {
+                    connection.deleteArchive();
+
+                }
+                Console.WriteLine(now);
+                Thread.Sleep(500);
+            
+            }
 
             
         }
