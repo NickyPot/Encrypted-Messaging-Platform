@@ -42,7 +42,7 @@ namespace clientMessaging
 
                 if (Int32.TryParse(enoTextBox.Text, out int result))
                 {
-                    string password = passwordTextBox.Text + connection.getEncryptionKey(Convert.ToInt32(enoTextBox.Text));
+                    string password = passwordTextBox.Text + connection.getEncryptionKey(Convert.ToInt32(enoTextBox.Text));//salt the password with the users encryption key
 
                     password = encryption.getSha(password);
                     if (connection.checkUserExists(Convert.ToInt32(enoTextBox.Text), password))
