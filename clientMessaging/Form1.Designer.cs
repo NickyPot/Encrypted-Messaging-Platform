@@ -28,42 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.loginBtn = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.enoTextBox = new System.Windows.Forms.TextBox();
             this.enoLabel = new System.Windows.Forms.Label();
             this.passLabel = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(304, 486);
+            this.panel1.Size = new System.Drawing.Size(304, 444);
             this.panel1.TabIndex = 0;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label2.Location = new System.Drawing.Point(68, 251);
+            this.label2.Location = new System.Drawing.Point(60, 236);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(156, 40);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Changing the world,\r\n one step at a time";
+            this.label2.Text = "Changing the world,\r\n one step at a time.\r\n";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
@@ -76,28 +76,11 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Dodge Financial";
             this.label1.UseCompatibleTextRendering = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Location = new System.Drawing.Point(90, 88);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Black;
-            this.pictureBox2.Location = new System.Drawing.Point(515, 88);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(95, 83);
-            this.pictureBox2.TabIndex = 17;
-            this.pictureBox2.TabStop = false;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // loginBtn
             // 
-            this.loginBtn.Location = new System.Drawing.Point(525, 330);
+            this.loginBtn.Location = new System.Drawing.Point(492, 274);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(75, 23);
             this.loginBtn.TabIndex = 20;
@@ -107,7 +90,7 @@
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(498, 286);
+            this.passwordTextBox.Location = new System.Drawing.Point(465, 230);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(137, 20);
@@ -117,7 +100,7 @@
             // 
             // enoTextBox
             // 
-            this.enoTextBox.Location = new System.Drawing.Point(498, 238);
+            this.enoTextBox.Location = new System.Drawing.Point(465, 182);
             this.enoTextBox.Name = "enoTextBox";
             this.enoTextBox.Size = new System.Drawing.Size(137, 20);
             this.enoTextBox.TabIndex = 21;
@@ -128,7 +111,7 @@
             // enoLabel
             // 
             this.enoLabel.AutoSize = true;
-            this.enoLabel.Location = new System.Drawing.Point(495, 222);
+            this.enoLabel.Location = new System.Drawing.Point(462, 166);
             this.enoLabel.Name = "enoLabel";
             this.enoLabel.Size = new System.Drawing.Size(93, 13);
             this.enoLabel.TabIndex = 22;
@@ -137,22 +120,47 @@
             // passLabel
             // 
             this.passLabel.AutoSize = true;
-            this.passLabel.Location = new System.Drawing.Point(495, 270);
+            this.passLabel.Location = new System.Drawing.Point(462, 214);
             this.passLabel.Name = "passLabel";
             this.passLabel.Size = new System.Drawing.Size(53, 13);
             this.passLabel.TabIndex = 23;
             this.passLabel.Text = "Password";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(106, 105);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 37);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "DF";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(484, 105);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(101, 37);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "Login";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(799, 486);
+            this.ClientSize = new System.Drawing.Size(740, 444);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.passLabel);
             this.Controls.Add(this.enoLabel);
             this.Controls.Add(this.enoTextBox);
-            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.panel1);
@@ -161,8 +169,6 @@
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,14 +178,15 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.TextBox enoTextBox;
         private System.Windows.Forms.Label enoLabel;
         private System.Windows.Forms.Label passLabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label4;
     }
 }
 

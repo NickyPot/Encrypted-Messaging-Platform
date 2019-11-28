@@ -59,15 +59,5 @@ namespace clientMessaging.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Lobster_Regular {
-            get {
-                object obj = ResourceManager.GetObject("Lobster_Regular", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

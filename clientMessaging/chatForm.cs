@@ -219,7 +219,7 @@ namespace clientMessaging
             //if the client the current user is talking to, has ticked the important checkBox
             else if (serverMessage.Contains("user is no longer online"))// used this string to make sure it isnt accidentally included in the message by the user
             {
-                MessageBox.Show("The other user has disconnected. The application will close now", "Error");
+                MessageBox.Show("The other user has disconnected. The application will close now.", "Error");
                 Application.Exit();
 
             }
