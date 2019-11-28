@@ -17,8 +17,6 @@ namespace clientMessaging
         private string _encryptedMessage;
         private string _decryptedMessage;
         private int _chatId;
-        private ASCIIEncoding encoded = new ASCIIEncoding();
-        private byte[] _message = new byte[2000];
         private int _important;
 
 

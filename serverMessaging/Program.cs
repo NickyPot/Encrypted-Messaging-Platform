@@ -128,6 +128,9 @@ namespace serverMessaging
                             catch
                             {
                                 Console.WriteLine("user is no longer online");
+                                byte[] disconnected = encoded.GetBytes("user is no longer online"); 
+                                userDictionary[enoToConnect].Write(disconnected, 0, disconnected.Length);
+
                                 break;
 
 
