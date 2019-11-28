@@ -200,6 +200,8 @@ namespace clientMessaging
             }
 
         }
+
+        //https://dotnetfiddle.net/vv9yW0 link to code snippet reference
         public static string getSha(string password)
         {
 
@@ -212,6 +214,8 @@ namespace clientMessaging
             return hashToString(hash);
         }
 
+
+        //https://dotnetfiddle.net/vv9yW0 link to code snippet reference
         private static string hashToString(byte[] hash)
         {
             StringBuilder result = new StringBuilder();
