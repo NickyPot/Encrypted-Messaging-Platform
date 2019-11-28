@@ -9,56 +9,57 @@ using System.Threading.Tasks;
 namespace clientMessaging.Tests
 {
     [TestClass()]
-    public class encryptionTests
+    public class MessageTests
     {
         [TestMethod()]
         public void EncryptStringTest()
         {
-            //arrange
+            Message msg = new Message();
             string expected = "AGgmltmcfUesIsJeKKY9VA==";
             string message = "hello";
             string encryptionKey = "b14ca5898a4e4133bbce2ea2315a1916";
-            string actual;
+            
 
             //act
-            actual = encryption.EncryptString(encryptionKey, message);
+            msg.EncryptString(encryptionKey, message);
 
-            Assert.AreEqual(expected, actual);
-
+            Assert.AreEqual(expected, msg.getEncryptedMessage());
 
         }
+
 
         [TestMethod()]
         public void DecryptStringTest()
         {
-            //arrange
+            Message msg = new Message();
             string expected = "hello";
             string message = "AGgmltmcfUesIsJeKKY9VA==";
             string encryptionKey = "b14ca5898a4e4133bbce2ea2315a1916";
-            string actual;
+
 
             //act
-            actual = encryption.DecryptString(encryptionKey, message);
+            msg.DecryptString(encryptionKey, message);
 
-            Assert.AreEqual(expected, actual);
-
-
+            Assert.AreEqual(expected, msg.getDecryptedMessage());
         }
 
         [TestMethod()]
-        public void getShaTest()
+        public void storeMessageTest()
         {
             //arrange
-            string password = "hello";
-            string expected = "9B71D224BD62F3785D96D46AD3EA3D73319BFBC2890CAADAE2DFF72519673CA72323C3D99BA5C11D7C7ACC6E14B8C5DA0C4663475C2E5C3ADEF46F73BCDEC043";
-            string actual;
+            string message = "asdf";
+            int important = 1;
+            int chatId = 90;
+            int eno = 1;
+            Message msg = new Message();
+            msg.setImportant(important);
+            msg.setChatId(chatId);
+            
 
-            //act
-            actual = encryption.getSha(password);
 
-            Assert.AreEqual(expected, actual);
-
-
+            //act and assert
+            msg.storeMessage(message, eno);
         }
+
     }
 }

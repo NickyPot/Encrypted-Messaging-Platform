@@ -17,30 +17,27 @@ namespace clientMessaging
     {
         Message incoming = new Message();
         Message outgoing = new Message();
+        User currentUser = new User();
+        User talkingToUser = new User();
         NetworkStream netstream;
+        TcpClient client = new TcpClient();
         string serverMessage = "";
-        string enoOfClient;
+        string decryptedMsg;//this is where the decrypted incoming message is stored
+
         string importantIsSet;//used when the user wants to send an important message, used string because it is easier to convert to bytes and conevert back
         bool incomingImportant;//used the user has an incoming important message 
         ASCIIEncoding encoded = new ASCIIEncoding();
        
-        string enoTotalkToKey = "";//this is where the encryption key, of the client the user is talking to, is stored
-        int enoToTalkToId;//this where the id, of the user that the current user wants to talk to, is stored
-        string eName;//the name of the person that the current user is talking to (used to display it in the message)
-        string currentEnoKey;//the encryption key of the current user. Used to encrypt out going messages
-        string decryptedMsg;//this is where the decrypted incoming message is stored
-        TcpClient client = new TcpClient();
-
 
         public chatForm(string eno)
         {
             InitializeComponent();
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
-            enoOfClient = eno;
-            currentEnoKey = connection.getEncryptionKey(Convert.ToInt32(enoOfClient));
+            currentUser.setEno(Convert.ToInt32(eno));
+            currentUser.setEncryptionKey();
             
-            byte[] byteArray = encoded.GetBytes(enoOfClient);//write to the server what the eno of the user currently using the client is
+            byte[] byteArray = encoded.GetBytes(currentUser.getEno().ToString());//write to the server what the eno of the user currently using the client is
             netstream = startConn();
             netstream.Write(byteArray, 0, byteArray.Length);
             startBackground();
@@ -109,9 +106,9 @@ namespace clientMessaging
         private void connectToUserBtn_Click(object sender, EventArgs e)
         {
 
-            enoToTalkToId = Convert.ToInt32(availableUsersBox.SelectedItem.ToString());
-            enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);//get the encryption key of the user the current user is talking to
-            eName = connection.getEName(enoToTalkToId);//get name of the user that the current user wants to talk to
+            talkingToUser.setEno(Convert.ToInt32(availableUsersBox.SelectedItem.ToString()));
+            talkingToUser.setEncryptionKey();//get the encryption key of the user the current user is talking to
+            talkingToUser.setName();//get name of the user that the current user wants to talk to
 
             Thread.Sleep(500);
             byte[] enoToTalkTo = encoded.GetBytes(availableUsersBox.SelectedItem.ToString());//get the eno of the user the current user wants to talk to from the drop down menu
@@ -141,7 +138,7 @@ namespace clientMessaging
         private void sendBtn_Click(object sender, EventArgs e)
         {
 
-            outgoing.EncryptString(currentEnoKey, chatTextBox.Text);
+            outgoing.EncryptString(currentUser.getEncryptionKey(), chatTextBox.Text);
 
             ASCIIEncoding encoded = new ASCIIEncoding();
             byte[] byteArray = encoded.GetBytes(outgoing.getEncryptedMessage());
@@ -224,33 +221,33 @@ namespace clientMessaging
             {
 
                 //this will only happen when the user currently using the application did not start the chat with the other client
-                if (enoTotalkToKey == "")
+                if (String.IsNullOrEmpty(talkingToUser.getEncryptionKey()))
                 {
                     //get the employee number of the user that is trying to talk to the current user
-                    enoToTalkToId = connection.getEnoToTalkTo(Convert.ToInt32(enoOfClient), incoming.getChatId());
+                    talkingToUser.setEnoSql(incoming.getChatId());
                     //get the name of the user that is trying to talk to the current user
-                    eName = connection.getEName(enoToTalkToId);
+                    talkingToUser.setName();
                     //get their encryption key
-                    enoTotalkToKey = connection.getEncryptionKey(enoToTalkToId);
+                    talkingToUser.setEncryptionKey();
 
                     //give the server which employee number the current user is talking to
-                    byte[] enoToTalkTo = encoded.GetBytes(enoToTalkToId.ToString());
+                    byte[] enoToTalkTo = encoded.GetBytes(talkingToUser.getEno().ToString());
                     netstream.Write(enoToTalkTo, 0, enoToTalkTo.Length);
 
                 }
 
 
-                incoming.DecryptString(enoTotalkToKey, serverMessage);//decrypts message using the key of the other user
+                incoming.DecryptString(talkingToUser.getEncryptionKey(), serverMessage);//decrypts message using the key of the other user
 
               
                 // add the name of the user to the chatline
-                decryptedMsg = eName + ": " + incoming.getDecryptedMessage();
+                decryptedMsg = talkingToUser.getName() + ": " + incoming.getDecryptedMessage();
 
                 if (incomingImportant)//if the incoming message is important
                 {
                     //add IMPORTANT to string message
                     decryptedMsg = decryptedMsg + " [IMPORTANT]";
-
+                    
                     //play sound
                     System.Media.SystemSounds.Beep.Play();
 
@@ -263,19 +260,19 @@ namespace clientMessaging
                 //this will store the incoming message in db
                 chatList.Items.Add(decryptedMsg);
 
-                int important;
+                
                 if (decryptedMsg.Contains("[IMPORTANT]"))
                 {
-                    important = 1;
+                    incoming.setImportant(1);
 
                 }
                 else
                 {
-                    important = 0;
+                    incoming.setImportant(0);
                 }
                 //MessageBox.Show(chatLine.ToString());
 
-                connection.storeMessage(serverMessage, important, incoming.getChatId(), enoToTalkToId);
+                incoming.storeMessage(serverMessage, talkingToUser.getEno());
                 //this is where the storage of the message ends
 
             }
@@ -313,10 +310,10 @@ namespace clientMessaging
         private void availableUsersBox_DropDown(object sender, EventArgs e)
         {
             availableUsersBox.Items.Clear();
-            List<int> availableUsers = connection.getAvailableUsers();
+            List<int> availableUsers = User.getAvailableUsers();
             foreach (int user in availableUsers)
             {
-                if (user != Convert.ToInt32(enoOfClient))
+                if (user != currentUser.getEno())
                 {
                     availableUsersBox.Items.Add(user);
 

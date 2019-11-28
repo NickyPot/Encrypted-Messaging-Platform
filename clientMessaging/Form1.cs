@@ -42,10 +42,13 @@ namespace clientMessaging
 
                 if (Int32.TryParse(enoTextBox.Text, out int result))
                 {
-                    string password = passwordTextBox.Text + connection.getEncryptionKey(Convert.ToInt32(enoTextBox.Text));//salt the password with the users encryption key
+                    User testUser = new User();
+                    testUser.setEno(Convert.ToInt32(enoTextBox.Text));
+                    testUser.setEncryptionKey();
+                    testUser.setPassword(passwordTextBox.Text);//salt the password with the users encryption key
 
-                    password = encryption.getSha(password);
-                    if (connection.checkUserExists(Convert.ToInt32(enoTextBox.Text), password))
+                    
+                    if (testUser.checkUserExists())
                     {
                         chatForm chatForm = new chatForm(enoTextBox.Text);
                         chatForm.Show();

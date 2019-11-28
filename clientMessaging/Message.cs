@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Data;
 
 
 namespace clientMessaging
@@ -16,6 +19,7 @@ namespace clientMessaging
         private int _chatId;
         private ASCIIEncoding encoded = new ASCIIEncoding();
         private byte[] _message = new byte[2000];
+        private int _important;
 
 
 
@@ -103,6 +107,55 @@ namespace clientMessaging
         
         }
 
+        public void setImportant(int set)
+        {
+            _important = set;
+        
+        }
+
+        public int getImportant()
+        {
+            return _important;
+        
+        }
+
+        public void storeMessage(string message, int eno)
+        {
+            //open sql connection
+            SqlConnection conn = connection.startConn();
+            conn.Open();
+
+            SqlCommand preppedCommand = new SqlCommand(null, conn);
+
+            //insert into the chats table the employee number of the two employees that are trying to talk
+            //get the last inserted id (it is given to the two clients in order to archibe their chats)
+            preppedCommand.CommandText = "insert into chatline (ChatLine, Important, ChatId, Eno) values (@message, @important, @chatId, @eno); ";
+            SqlParameter msgParam = new SqlParameter("@message", SqlDbType.VarChar);//employee number parameter
+            SqlParameter importantParam = new SqlParameter("@important", SqlDbType.Bit);//employee number parameter
+            SqlParameter chatIdParam = new SqlParameter("@chatId", SqlDbType.Int);//employee number parameter
+            SqlParameter enoParam = new SqlParameter("@eno", SqlDbType.Int);//employee number parameter
+
+            msgParam.Value = message;
+            msgParam.Size = 400;
+            importantParam.Value = _important;
+            chatIdParam.Value = _chatId;
+            enoParam.Value = eno;
+
+            preppedCommand.Parameters.Add(msgParam);
+            preppedCommand.Parameters.Add(importantParam);
+            preppedCommand.Parameters.Add(chatIdParam);
+            preppedCommand.Parameters.Add(enoParam);
+
+            preppedCommand.Prepare();
+
+
+
+            preppedCommand.ExecuteNonQuery();
+
+
+            conn.Close();
+
+        }
 
 
 
